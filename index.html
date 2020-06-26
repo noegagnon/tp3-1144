@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>tp3</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+  </head>
+  <body>
+    <h1><em><strong>Travail pratique #3</strong></em></h1>
+    <h2><em>Identification</em></h2>
+    <p><strong>Ce travail a &eacute;t&eacute; fait par No&eacute;mie Gagnon matricule: 20047043</strong></p>
+
+    <div id="partie1">
+      <h2>Partie 1: Formulaire de conversion</h2> 
+      <form method="post" onsubmit="return false;" action="#">
+        <p>
+        Valeur: <input type="text" name="chiffre" id="valeur"> 
+        <span id="resultat">Resultat ici</span> <br>
+        <input type="submit" onclick="pouceEnCm();" value="Pouces vers cm">
+        <input type="submit" onclick="cmEnPouce();" value="Cm vers pouces">
+        <input type="submit" onclick="celsiusEnFarenheit();" value="Celsius vers Farenheit">
+        <input type="submit" onclick="farenheitEnCelsius();" value="Farenheit vers Celsius">
+        </p>
+      </form>
+    </div>
+
+    <div id="partie2">
+      <h2>Partie 2: Affichage dans la page Web</h2>
+      <p>Nom: <input type="text" name="nom" id="nomPers"> </p> 
+      <p>Niveau(1 &agrave; 6): <input type="text" name="niveau" id="chiffreNiveau"> <input type="submit" onclick="afficherTexteNiv()" value="Afficher partie 2"></p>
+      <div id="affichageNiv">Affichage ici</div> <br>
+    </div>
+
+    <div id="partie3">
+      <h2>Partie 3: Affichage du menu, animation des images et calcul du co&ucirc;t</h2>
+      <div id="menu">
+        <ul>
+          <li class="choisir">Menu</li>
+          <li>Entr&eacute;e
+            <ul>
+              <li>Escargot</li>
+              <li>Salade verte</li>
+              <li>Salade C&eacute;sar</li>
+            </ul>
+          </li>
+          <li>Principal
+            <ul>
+              <li>Spaghetti</li>
+              <li>Steak</li>
+              <li>Pizza</li>
+            </ul>
+          </li>
+          <li>Dessert
+            <ul>
+              <li>Cr&egrave;me glac&eacute;e</li>
+              <li>Gateau</li>
+              <li>Pouding</li>
+            </ul>
+          </li>
+          <li>Boisson
+            <ul>
+              <li>Caf&eacute; / Th&eacute;</li>
+              <li>Boisson gazeuse</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div id="affichage">
+        <p id="choix"><strong>Votre choix:</strong></p>
+        <p class = "categorie" id="Entree">
+          Entr&eacute;e: <br>
+          <img src="images/vide.jpg" id="imgEntree" alt="image entr&eacute;e"> <br>
+          <span id="prixEntree"></span>
+        </p>
+        <p class = "categorie" id="Principal">
+          Principal: <br>
+          <img src="images/vide.jpg" id="imgPrincipal" alt="image plat principal"> <br>
+          <span id="prixPrincipal"></span>
+        </p>
+        <p class = "categorie" id="Dessert">
+          Dessert: <br>
+          <img src="images/vide.jpg" id="imgDessert" alt="image dessert"> <br>
+          <span id="prixDessert"></span>
+        </p>
+        <p class = "categorie" id="Boisson">
+          Boisson: <br>
+          <img src="images/vide.jpg" id="imgBoisson" alt="image boisson"> <br>
+          <span id="prixBoisson"></span>
+        </p>
+        <br>
+        <button>Cliquez ici pour calculer la facture</button>
+        <br><br>
+        <div>
+          <span id="montant"></span>
+          <span id="taxes"></span>
+          <span id="prixTotal"></span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function cmEnPouce() {
+        document.getElementById('resultat').innerHTML = "cm ==> " + (document.getElementById('valeur').value/2.5).toFixed(1) + " pouces";
+      }
+      function pouceEnCm() {
+        document.getElementById('resultat').innerHTML = "pouces ==> " + (document.getElementById('valeur').value*2.5).toFixed(1) + " cm";    
+      }
+      function celsiusEnFarenheit() {
+        var val = (document.getElementById('valeur').value*9/5 + 32).toFixed(1);
+        document.getElementById('resultat').innerHTML = "celsius ==> " + val + " farenheit";
+      }
+      function farenheitEnCelsius() {
+        document.getElementById('resultat').innerHTML = "farheinet ==> " + ((document.getElementById('valeur').value -32)*5/9).toFixed(1) + " celsius";
+      }
+      function afficherTexteNiv() {
+        var element = document.getElementById('chiffreNiveau').value;
+        var erreur = "Erreur le niveau doit être entre 1 et 6";
+        var affiche = document.getElementById('affichageNiv');
+        if(element > 0 && element < 7) {
+          affiche.innerHTML = "<h"+element+">"+"Bonjour " + document.getElementById('nomPers').value + " niveau = " + element+"</h"+element+">";
+          affiche.style.color = "green";
+          affiche.style.backgroundColor = "white";
+        }
+        else {
+          document.getElementById('affichageNiv').innerHTML = erreur;
+          affiche.style.color = "red";
+          affiche.style.backgroundColor = "white";
+        }            
+      }
+
+      $(document).ready(function(){
+        var monMenu = { "Escargot": {cat: "Entree", image: "escargot.jpg", prix: 5.50}, 
+                        "Salade verte" : {cat: "Entree", image: "salade2.jpg", prix: 5.95}, 
+                        "Salade César": {cat: "Entree", image: "salade.jpg", prix: 6.95}, 
+                        "Spaghetti": {cat: "Principal", image: "spaghetti.jpg", prix: 15.95}, 
+                        "Steak": {cat: "Principal", image: "steak.jpg", prix: 25.95}, 
+                        "Pizza": {cat: "Principal", image: "pizza.jpg", prix: 17.95}, 
+                        "Crème glacée": {cat: "Dessert", image: "cremeglacee.jpg", prix: 4.25}, 
+                        "Gateau": {cat: "Dessert", image: "gateau.jpg", prix: 4.95}, 
+                        "Pouding": {cat: "Dessert", image: "pouding.jpg", prix: 3.95}, 
+                        "Café / Thé": {cat: "Boisson", image: "cafe.jpg", prix: 2.50}, 
+                        "Boisson gazeuse": {cat: "Boisson", image: "boisson.jpg", prix: 2.95}};
+      
+        $('li').on('click', function(e) {
+          if($(this).hasClass('choisir'))
+            return;
+          var element = $(this).parent();
+          element.find('li').removeClass('choisir').find('ul').hide();
+          $(this).addClass('choisir').children('ul').slideToggle(500);
+        });
+
+        $('li li').on('click', function(e){
+          var choixMenu = monMenu[$(this).html()];
+          var idImg = "#img"+choixMenu["cat"];
+          var nomFichierImg = "images/"+choixMenu["image"];
+          var idPrix = "#prix" + choixMenu["cat"]
+          var prix = choixMenu["prix"].toFixed(2);
+
+          $(idPrix).html(prix+"$");
+          $(idImg).attr("src", nomFichierImg)
+        });
+
+        $('button').on('click', function(e) {
+          var prixEntree = parseFloat($("#prixEntree").html());
+          var prixPrincipal = parseFloat($("#prixPrincipal").html());
+          var prixDessert = parseFloat($("#prixDessert").html());
+          var prixBoisson = parseFloat($("#prixBoisson").html());
+
+          if (isNaN(prixEntree)) prixEntree = 0;
+          if (isNaN(prixPrincipal)) prixPrincipal = 0;
+          if (isNaN(prixDessert)) prixDessert = 0;
+          if (isNaN(prixBoisson)) prixBoisson = 0;
+
+          var total = prixEntree + prixPrincipal + prixDessert + prixBoisson;
+          var taxeTps = total*5/100;
+          var taxeTvq = total*9.975/100;
+          var totalTaxes = taxeTps + taxeTvq;
+          var montantTotal = total + totalTaxes;
+
+          $("#montant").html("Total: " + total.toFixed(2) + "$");
+          $("#taxes").html(" taxes: " + totalTaxes.toFixed(2) + "$");
+          $("#prixTotal").html(" = " + montantTotal.toFixed(2) + "$");
+        });
+      });
+    </script>
+  </body>
+</html>
